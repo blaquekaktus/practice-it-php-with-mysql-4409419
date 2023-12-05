@@ -1,13 +1,12 @@
 <?php
+//Typecast the id as an integer to prevent SQl injection
 
-// typecast the value as an integer to prevent SQL injection
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-
 // 1. Create a database connection
 $db = new mysqli("127.0.0.1", "mariadb", "mariadb", "mariadb", 3306);
 
 // Test if connection succeeded (recommended)
-if($db->connect_errno) {
+if ($db->connect_errno) {
   $msg = "Database connection failed: ";
   $msg .= $db->connect_error;
   $msg .= " (" . $db->connect_errno . ")";
@@ -22,57 +21,59 @@ $result = $db->query($sql);
 
 // Test if query succeeded (recommended)
 if (!$result) {
-	exit("Database query failed.");
+  exit("Database query failed.");
 }
 
 // 3. Use returned data (if any)
 $task = $result->fetch_object();
-
 if (is_null($task)) {
-  exit("No task found.");
+  exit("No task with id: " . $id . " was found.");
 }
 
 ?>
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Task Manager: Show Task</title>
-  </head>
-  <body>
 
-    <header>
-      <h1>Task Manager</h1>
-    </header>
+<head>
+  <title>Task Manager: Show Task</title>
+</head>
 
-    <nav>
-      <a href="index.php">Task List</a>
-    </nav>
+<body>
 
-    <section>
+  <header>
+    <h1>Task Manager</h1>
+  </header>
 
-      <h1>Show Task</h1>
+  <nav>
+    <a href="index.php">Task List</a>
+  </nav>
 
-      <dl>
-        <dt>ID</dt>
-        <dd><?php echo $task->id; ?></dd>
-      </dl>
-      <dl>
-        <dt>Description</dt>
-        <dd><?php echo $task->description; ?></dd>
-      </dl>
-      <dl>
-        <dt>Priority</dt>
-        <dd><?php echo $task->priority; ?></dd>
-      </dl>
-      <dl>
-        <dt>Completed</dt>
-        <dd><?php echo $task->completed == 1 ? 'true' : 'false'; ?></dd>
-      </dl>
+  <section>
 
-    </section>
+    <h1>Show Task</h1>
 
-  </body>
+    <dl>
+      <dt>ID</dt>
+      <dd><?= $task->id; ?></dd>
+    </dl>
+    <dl>
+      <dt>Priority</dt>
+      <dd><?= $task->priority; ?></dd>
+    </dl>
+    <dl>
+      <dt>Completed</dt>
+      <dd><?= $task->completed == 1 ? 'true' : 'false'; ?></dd>
+    </dl>
+    <dl>
+      <dt>Description</dt>
+      <dd><?= $task->description; ?></dd>
+    </dl>
+
+  </section>
+
+</body>
+
 </html>
 
 <?php
