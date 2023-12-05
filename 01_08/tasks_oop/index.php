@@ -1,23 +1,29 @@
 <?php
 
-// regulate input with an allow list to prevent SQL injection
+// hostname: "127.0.0.1"
+// username: "mariadb"
+// password: "mariadb"
+// database: "mariadb"
+// port:     3306
+
+// To prevent SQL injections, limit the possible input options using an array of predefined values
 $allowed = array("0", "1");
 if (isset($_GET['completed']) && in_array($_GET['completed'], $allowed)) {
   $completed = $_GET['completed'];
 }
 
-// 1. Create a database connection
+//create the database connection
 $db = new mysqli("127.0.0.1", "mariadb", "mariadb", "mariadb", 3306);
 
-// Test if connection succeeded (recommended)
-if($db->connect_errno) {
-  $msg = "Database connection failed: ";
+//check that the connection was successful
+if ($db->connect_errno) {
+  $msg = "The database connection failed: ";
   $msg .= $db->connect_error;
-  $msg .= " (" . $db->connect_errno . ")";
+  $msg .= "( " . $db->connect_errno . ").";
   exit($msg);
 }
 
-// 2. Perform database query
+
 $sql = "SELECT * FROM tasks ";
 if (isset($completed)) {
   $sql .= "WHERE completed = {$completed} ";
@@ -25,65 +31,71 @@ if (isset($completed)) {
 $sql .= "ORDER BY priority";
 $result = $db->query($sql);
 
-// Test if query succeeded (recommended)
+
+//check if query was successful
 if (!$result) {
-	exit("Database query failed.");
+  exit("An error occurred during the database query!" . $db->connect_error);
 }
 
-// 3. Use returned data (if any)
-
+//fetch all rows into an array
+//$tasks = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Task Manager: Task List</title>
-  </head>
-  <body>
 
-    <header>
-      <h1>Task Manager</h1>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager: Task List</title>
+</head>
 
-    <section>
+<body>
 
-      <h1>Task List</h1>
+  <header>
+    <h1>Task Manager</h1>
+  </header>
 
-      <p>
-        <a href="index.php">All</a> | 
-        <a href="index.php?completed=1">Complete</a> | 
-        <a href="index.php?completed=0">Incomplete</a>
-      </p>
+  <section>
 
-    	<table>
-    	  <tr>
-          <th>ID</th>
-          <th>Priority</th>
-          <th>Completed</th>
-    	    <th>Description</th>
-    	    <th>&nbsp;</th>
-    	  </tr>
+    <h1>Task List</h1>
 
-        <?php while($task = $result->fetch_object()) { ?>
-          <tr>
-            <td><?php echo $task->id; ?></td>
-            <td><?php echo $task->priority; ?></td>
-            <td><?php echo $task->completed == 1 ? 'true' : 'false'; ?></td>
-      	    <td><?php echo $task->description; ?></td>
-      	    <td><a href="show.php?id=">View</a></td>
-      	  </tr>
-        <?php } ?>
-    	</table>
+    <p>
+      <a href="index.php">All</a>
+      <a href="index.php?completed=1">Completed</a>
+      <a href="index.php?completed=0">Incomplete</a>
+    </p>
 
-    </section>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Priority</th>
+        <th>Completed</th>
+        <th>Description</th>
+        <th>&nbsp;</th>
+      </tr>
 
-  </body>
+      <?php
+      while ($task = $result->fetch_object()) {  ?>
+        <tr>
+          <td><?= $task->id ?></td>
+          <td><?= $task->priority ?></td>
+          <td><?= $task->completed == 1 ? 'True' : 'False' ?></td>
+          <td><?= $task->description ?></td>
+          <td><a href="show.php?id=<?=$task->id?>">View</a></td>
+        </tr>
+      <?php } ?>
+    </table>
+
+  </section>
+
+</body>
+
 </html>
 
 <?php
-// 4. Release returned data
+//release the returned data 
 $result->free();
 
-// 5. Close database connection
+//close the database connection
 $db->close();
 ?>

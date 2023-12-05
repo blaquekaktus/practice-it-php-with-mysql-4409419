@@ -59,10 +59,10 @@ if (!$result) {
 
       <?php while ($task = $result->fetch_object()) {  ?>
         <tr>
-          <td><?php echo $task->id ?></td>
-          <td><?php echo $task->priority ?></td>
-          <td><?php echo $task->completed == 1 ? 'True' : 'False' ?></td>
-          <td><?php echo $task->description ?></td>
+          <td><?= $task->id ?></td>
+          <td><?= $task->priority ?></td>
+          <td><?= $task->completed == 1 ? 'True' : 'False' ?></td>
+          <td><?= $task->description ?></td>
         </tr>
       <?php } ?>
     </table>
