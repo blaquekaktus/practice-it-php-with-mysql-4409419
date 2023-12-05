@@ -6,6 +6,7 @@
 // database: "mariadb"
 // port:     3306
 
+//create db connection
 ?>
 
 <!doctype html>
