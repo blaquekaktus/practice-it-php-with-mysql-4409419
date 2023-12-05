@@ -24,10 +24,11 @@ $result = $db->query($sql);
 
 //check if query was successful
 if (!$result) {
-  exit("An error occurred during the database query!");
+  exit("An error occurred during the database query!" . $db->connect_error);
 }
 
-
+//fetch all rows into an array
+//$tasks = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!doctype html>
@@ -56,16 +57,14 @@ if (!$result) {
         <th>Description</th>
       </tr>
 
-      <?php foreach ($result as $task) {; //foreach loop start 
-      ?>
+      <?php while ($task = $result->fetch_object()) {  ?>
         <tr>
-          <td><?= $task['id'] ?></td>
-          <td><?= $task['priority'] ?></td>
-          <td><?= $task['completed '] == 1 ? 'True' : 'False' ?></td>
-          <td><?= $task['description'] ?></td>
+          <td><?php echo $task->id ?></td>
+          <td><?php echo $task->priority ?></td>
+          <td><?php echo $task->completed == 1 ? 'True' : 'False' ?></td>
+          <td><?php echo $task->description ?></td>
         </tr>
-      <?php } // end loop 
-      ?>
+      <?php } ?>
     </table>
 
   </section>
@@ -75,7 +74,7 @@ if (!$result) {
 </html>
 
 <?php
-//release the query result 
+//release the returned data 
 $result->free();
 
 //close the database connection
