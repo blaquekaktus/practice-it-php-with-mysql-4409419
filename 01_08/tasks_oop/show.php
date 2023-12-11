@@ -1,7 +1,7 @@
 <?php
 //Typecast the id as an integer to prevent SQl injection
-
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
 // 1. Create a database connection
 $db = new mysqli("127.0.0.1", "mariadb", "mariadb", "mariadb", 3306);
 
