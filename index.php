@@ -1,20 +1,26 @@
 <style>
-  a, a:visited {
+  a,
+  a:visited {
     color: blue;
   }
+
   table {
     width: 50%;
     border-collapse: collapse;
   }
-  table td, table th {
+
+  table td,
+  table th {
     border: 1px solid #666;
     text-align: left;
     padding: 2px 4px;
   }
+
   table th {
     background: #CCC;
     color: #000;
   }
+
   li.checkit {
     margin-bottom: 1em;
   }
@@ -75,6 +81,7 @@
 <h2>Quick Links to View Coding Results</h2>
 <ul>
   <li class="tryit">01_02 Try It: Use PHP to Display SQL Data - <a href="/01_02/tasks/show.php">Procedural</a> | <a href="/01_02/tasks_oop/show.php">OOP</a></li>
+  <li class="tryit">01_02 Try It: Use PHP to Display SQL Data - <a href="/01_02/tasks_oop/show_PDO.php">OOP</a></li>
   <li class="checkit">01_03 Check It: Use PHP to Display SQL Data - <a href="/01_03_checkit/tasks/show.php">Procedural</a> | <a href="/01_03_checkit/tasks_oop/show.php">OOP</a></li>
   <li class="tryit">01_04 Try It: List Records - <a href="/01_04/tasks">Procedural</a> | <a href="/01_04/tasks_oop">OOP</a></li>
   <li class="checkit">01_05 Check It: List Records - <a href="/01_05_checkit/tasks">Procedural</a> | <a href="/01_05_checkit/tasks_oop">OOP</a></li>

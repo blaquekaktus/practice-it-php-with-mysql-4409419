@@ -1,38 +1,39 @@
 <?php
 
-
 $hostname = "127.0.0.1";
 $username = "mariadb";
 $password = "mariadb";
 $database = "mariadb";
-$port =    3306;
+$port = 3306;
 
-try{
-  
-//Define Data Source Name
-$dsn = "mysql: host=$hostname; dbname=$database; port=$port";
+try {
 
-//verify connection is established
-if ($db->connect_errno) {
-  $msg = "Database connection failed: ";
-  $msg .= $db->connect_error;
-  $msg .= " (" . $db->connect_errno . ").";
+  //Define Data Source Name
+  $dsn = "mysql: host=$hostname; dbname=$database; port=$port";
+
+  $options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+  ];
+
+  $db = new PDO($dsn, $username, $password, $options);
+
+  //perform database query
+  $sql = "SELECT * FROM tasks LIMIT 1";
+  $stmt = $db->query($sql);
+
+  //test if query was successful
+  if (!$stmt) {
+    $msg = "Database query failed.";
+    exit($msg);
+  }
+
+  //return query results if any
+  $task = $stmt->fetch();
+} catch (PDOException $e) {
+  $msg =  "Database connection failed: " . $e->getMessage();
   exit($msg);
 }
-
-//perform database query
-$sql = "SELECT * FROM tasks LIMIT 1";
-$result = $db->query($sql);
-
-//test if query was successful
-if (!$result) {
-  $msg = "Database query failed.";
-  exit($msg);
-}
-
-//return query results if any
-$task = $result->fetch_object();
-
 
 ?>
 
@@ -78,7 +79,7 @@ $task = $result->fetch_object();
 
 <?php
 //release returned data
-$result->free();
+$stmt->closeCursor();
 
 //close database connection
-$db->close();
+$db = null;
