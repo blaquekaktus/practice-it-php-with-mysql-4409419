@@ -9,7 +9,7 @@ $port = 3306;
 try {
 
   //Define Data Source Name
-  $dsn = "mysql: host=$hostname; dbname=$database; port=$port";
+  $dsn = "mysql: host=$hostname; dbname=$database; port=$port;unix_socket=/path/to/mysql.sock";
 
   $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -31,7 +31,7 @@ try {
   //return query results if any
   $task = $stmt->fetch();
 } catch (PDOException $e) {
-  $msg =  "Database connection failed: " . $e->getMessage();
+  $msg = "Database connection failed: " . $e->getMessage();
   exit($msg);
 }
 

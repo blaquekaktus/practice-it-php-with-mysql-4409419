@@ -81,7 +81,6 @@
 <h2>Quick Links to View Coding Results</h2>
 <ul>
   <li class="tryit">01_02 Try It: Use PHP to Display SQL Data - <a href="/01_02/tasks/show.php">Procedural</a> | <a href="/01_02/tasks_oop/show.php">OOP</a></li>
-  <li class="tryit">01_02 Try It: Use PHP to Display SQL Data - <a href="/01_02/tasks_oop/show_PDO.php">OOP</a></li>
   <li class="checkit">01_03 Check It: Use PHP to Display SQL Data - <a href="/01_03_checkit/tasks/show.php">Procedural</a> | <a href="/01_03_checkit/tasks_oop/show.php">OOP</a></li>
   <li class="tryit">01_04 Try It: List Records - <a href="/01_04/tasks">Procedural</a> | <a href="/01_04/tasks_oop">OOP</a></li>
   <li class="checkit">01_05 Check It: List Records - <a href="/01_05_checkit/tasks">Procedural</a> | <a href="/01_05_checkit/tasks_oop">OOP</a></li>
